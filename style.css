@@ -1,27 +1,31 @@
 * {
-  box-sizing: border-box; [cite_start]/* Quan trọng cho responsive, từ text.txt [cite: 1] */
+  box-sizing: border-box; /* Quan trọng cho responsive, giúp padding không làm tăng kích thước */
   font-family: "Segoe UI", Arial, sans-serif;
 }
 
 body {
-  font-family: "Segoe UI", Arial, sans-serif;
+  /* Hình nền và hiệu ứng */
   background: url("images/one-era-kinera-1536x675.jpg") center/cover fixed no-repeat;
-  backdrop-filter: blur(2px);
+  backdrop-filter: blur(2.5px); 
   background-size: cover;
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
   margin: 0;
+  /* Thêm padding an toàn cho thiết bị di động (mobile safety margin) */
+  padding: 20px; 
 }
 
 .form-container {
   width: 100%;
-  max-width: 640px;
-  background-color: rgba(255, 255, 255, 0.5);
-  padding: 40px 48px;
+  max-width: 640px; /* Giữ giới hạn chiều rộng tối đa */
+  /* Độ trong suốt */
+  background-color: rgba(255, 255, 255, 0.5); 
+  /* Padding mặc định cho mobile */
+  padding: 30px 20px; 
   border-radius: 12px;
-  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); 
   text-align: center;
 }
 
@@ -29,14 +33,15 @@ body {
   margin-bottom: 20px;
 }
 
-.logo-container img {
-  max-width: 180px;
+.logo-container img, .form-logo {
+  max-width: 150px; /* Kích thước logo tối đa */
   height: auto;
 }
 
 h2 {
-  margin-bottom: 24px;
+  margin-bottom: 20px;
   color: #2c3e50;
+  font-size: 1.8em; /* Sử dụng đơn vị tương đối */
 }
 
 .form-group {
@@ -54,11 +59,11 @@ h2 {
 .form-group input,
 .form-group select,
 .form-group textarea {
-  width: 100%;
+  width: 100%; /* Đảm bảo các trường nhập liệu chiếm toàn bộ chiều rộng form */
   padding: 10px;
   border-radius: 6px;
   border: 1px solid #ccc;
-  font-size: 15px;
+  font-size: 1em; 
   box-sizing: border-box;
 }
 
@@ -73,13 +78,33 @@ h2 {
   color: white;
   border: none;
   padding: 12px;
-  font-size: 16px;
+  font-size: 1.1em; 
   border-radius: 6px;
   cursor: pointer;
   transition: 0.3s;
+  margin-top: 10px; 
 }
 
 .submit-btn:hover {
   background-color: #2980b9;
 }
 
+/* === Media Queries: Tối ưu cho các kích thước màn hình khác nhau === */
+
+/* 1. Desktop và Tablet ngang (Màn hình lớn hơn 640px) */
+@media (min-width: 641px) {
+    .form-container {
+        /* Phục hồi padding lớn hơn cho màn hình lớn */
+        padding: 40px 48px;
+    }
+}
+
+/* 2. Mobile dọc (Màn hình rất nhỏ, tối đa 480px) */
+@media (max-width: 480px) {
+    h2 {
+        font-size: 1.5em; /* Giảm kích thước tiêu đề */
+    }
+    .form-container {
+        padding: 20px 15px; /* Giảm padding ngang hơn nữa trên mobile nhỏ */
+    }
+}
