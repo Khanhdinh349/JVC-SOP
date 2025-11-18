@@ -91,44 +91,44 @@ function showSuccessAndRedirect(lang) {
   }, 100); 
 }
 
-// === Thu thập dữ liệu form cụ thể ===
+// === Thu thập dữ liệu form cụ thể (ĐÃ TỐI ƯU HÓA SỬ DỤNG THUỘC TÍNH NAME) ===
 function collectFormData(formId) {
     const data = {
         // Ghi lại thời gian hiện tại theo múi giờ Việt Nam
         timestamp: new Date().toLocaleString("en-US", { timeZone: "Asia/Ho_Chi_Minh" }),
     };
 
-    // Định nghĩa ánh xạ giữa selector trong form HTML và tên thuộc tính
-    // Tên thuộc tính phải KHỚP với TÊN CỘT trong Google Apps Script
+    // Định nghĩa ánh xạ, sử dụng thuộc tính 'name' để tìm kiếm phần tử và đặt key
+    // THỨ TỰ CỦA CÁC KHÓA NÀY PHẢI KHỚP CHÍNH XÁC VỚI THỨ TỰ CÁC CỘT TRONG APPS SCRIPT
     const fieldMap = {
         "form-doitac": [
-            { selector: '[data-ph-en="Enter full name"]', name: 'fullName' },
-            { selector: '[data-ph-en="Enter ID number"]', name: 'idNumber' },
-            { selector: '[data-ph-en="Enter phone number"]', name: 'phoneNumber' },
-            { selector: '[data-ph-en="Company name"]', name: 'company' },
-            { selector: '[data-ph-en="Department name"]', name: 'recDepartment' },
-            { selector: '[data-ph-en="Staff name"]', name: 'recStaff' },
-            { selector: '#visitDate', name: 'visitDate' },
-            { selector: '#visitTime', name: 'visitTime' },
-            { selector: 'textarea', name: 'notes' }
+            { selector: '[name="fullName"]', name: 'fullName' },
+            { selector: '[name="idNumber"]', name: 'idNumber' },
+            { selector: '[name="phoneNumber"]', name: 'phoneNumber' },
+            { selector: '[name="company"]', name: 'company' },
+            { selector: '[name="recDepartment"]', name: 'recDepartment' },
+            { selector: '[name="recStaff"]', name: 'recStaff' },
+            { selector: '[name="visitDate"]', name: 'visitDate' },
+            { selector: '[name="visitTime"]', name: 'visitTime' },
+            { selector: '[name="notes"]', name: 'notes' }
         ],
         "form-khach": [
-            { selector: '[data-ph-en="Enter full name"]', name: 'fullName' },
-            { selector: '[data-ph-en="Enter ID number"]', name: 'idNumber' },
-            { selector: '[data-ph-en="Enter phone number"]', name: 'phoneNumber' },
-            { selector: '[data-ph-en="Enter email if available"]', name: 'email' },
-            { selector: '#visitDate', name: 'visitDate' },
-            { selector: '#visitTime', name: 'visitTime' },
-            { selector: 'textarea', name: 'notes' }
+            { selector: '[name="fullName"]', name: 'fullName' },
+            { selector: '[name="idNumber"]', name: 'idNumber' },
+            { selector: '[name="phoneNumber"]', name: 'phoneNumber' },
+            { selector: '[name="email"]', name: 'email' },
+            { selector: '[name="visitDate"]', name: 'visitDate' },
+            { selector: '[name="visitTime"]', name: 'visitTime' },
+            { selector: '[name="notes"]', name: 'notes' }
         ],
         "form-daily": [
-            { selector: '[data-ph-en="Enter agency name"]', name: 'agencyName' },
-            { selector: '[data-ph-en="Enter staff name"]', name: 'staffName' },
-            { selector: '[data-ph-en="Enter ID number"]', name: 'idNumber' },
-            { selector: '[data-ph-en="Enter phone number"]', name: 'phoneNumber' },
-            { selector: '#visitDate', name: 'visitDate' },
-            { selector: '#visitTime', name: 'visitTime' },
-            { selector: 'textarea', name: 'notes' }
+            { selector: '[name="agencyName"]', name: 'agencyName' },
+            { selector: '[name="staffName"]', name: 'staffName' },
+            { selector: '[name="idNumber"]', name: 'idNumber' },
+            { selector: '[name="phoneNumber"]', name: 'phoneNumber' },
+            { selector: '[name="visitDate"]', name: 'visitDate' },
+            { selector: '[name="visitTime"]', name: 'visitTime' },
+            { selector: '[name="notes"]', name: 'notes' }
         ]
     };
     
@@ -137,7 +137,7 @@ function collectFormData(formId) {
     if (!currentFormMap) return null;
 
     currentFormMap.forEach(field => {
-        // Tìm phần tử trong form hiện tại
+        // TÌM KIẾM PHẦN TỬ BẰNG THUỘC TÍNH NAME ĐÃ CẬP NHẬT TRONG HTML
         const element = document.querySelector(`#${formId} ${field.selector}`);
         if (element) {
             data[field.name] = element.value;
@@ -169,6 +169,7 @@ async function sendDataToSheet(formData, lang) {
         if (result.result === "success") {
             showSuccessAndRedirect(lang); // Hiển thị chúc mừng và chuyển hướng
         } else {
+            // Lỗi Apps Script sẽ hiển thị tại đây
             alert(`Lỗi khi ghi dữ liệu: ${result.message}`);
         }
     } catch (error) {
