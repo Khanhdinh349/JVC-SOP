@@ -148,14 +148,10 @@ function collectFormData(formId) {
     return data;
 }
 
-// !!! VUI LÒNG THAY THẾ URL NÀY BẰNG URL APPS SCRIPT ĐÃ TRIỂN KHAI CỦA BẠN !!!
-const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzL7Pq4s_YourUniqueScriptID_lY6Q/exec'; 
+// !!! ĐÃ THAY THẾ URL BẰNG URL BẠN CUNG CẤP !!!
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyuDDY28hFBK6cBcnMnsAEhLTyn6-FrWkXoFf9dqnbM5ea7-xIaxY1E1m4CDQ3967hw/exec'; 
 
 async function sendDataToSheet(formData, lang) {
-    if (APPS_SCRIPT_URL.includes('YourUniqueScriptID')) {
-        alert("Lỗi: Vui lòng thay thế APPS_SCRIPT_URL trong script.js bằng URL đã triển khai của bạn.");
-        return;
-    }
     
     try {
         const response = await fetch(APPS_SCRIPT_URL, {
