@@ -1,3 +1,8 @@
+* {
+  box-sizing: border-box; [cite_start]/* Quan trọng cho responsive, từ text.txt [cite: 1] */
+  font-family: "Segoe UI", Arial, sans-serif;
+}
+
 body {
   font-family: "Segoe UI", Arial, sans-serif;
   background: url("images/one-era-kinera-1536x675.jpg") center/cover fixed no-repeat;
@@ -77,3 +82,4 @@ h2 {
 .submit-btn:hover {
   background-color: #2980b9;
 }
+
