@@ -1,49 +1,53 @@
 * {
-  box-sizing: border-box; /* Quan trọng cho responsive, giúp padding không làm tăng kích thước */
+  box-sizing: border-box; /* Rất quan trọng cho Responsive Design */
   font-family: "Segoe UI", Arial, sans-serif;
 }
 
 body {
   /* Hình nền và hiệu ứng */
   background: url("images/one-era-kinera-1536x675.jpg") center/cover fixed no-repeat;
-  backdrop-filter: blur(2.5px); 
+  backdrop-filter: blur(2.5px); /* Điều chỉnh độ mờ nền theo text.txt */
   background-size: cover;
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
   margin: 0;
-  /* Thêm padding an toàn cho thiết bị di động (mobile safety margin) */
+  /* THÊM QUY TẮC QUAN TRỌNG: Padding an toàn cho thiết bị di động */
   padding: 20px; 
 }
 
 .form-container {
-  width: 100%;
-  max-width: 640px; /* Giữ giới hạn chiều rộng tối đa */
-  /* Độ trong suốt */
-  background-color: rgba(255, 255, 255, 0.5); 
-  /* Padding mặc định cho mobile */
+  width: 100%; /* Đảm bảo chiếm toàn bộ chiều rộng có sẵn */
+  max-width: 640px; /* Giới hạn chiều rộng tối đa */
+  background-color: rgba(255, 255, 255, 0.5);
+  
+  /* Đặt padding mặc định cho màn hình nhỏ */
   padding: 30px 20px; 
+  
   border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); 
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Điều chỉnh box-shadow theo text.txt */
   text-align: center;
 }
 
+/* Tối ưu logo */
 .logo-container {
   margin-bottom: 20px;
 }
 
-.logo-container img, .form-logo {
-  max-width: 150px; /* Kích thước logo tối đa */
+.form-logo, .logo-container img {
+  max-width: 150px; /* Giảm kích thước logo để phù hợp hơn với mobile */
   height: auto;
 }
 
+/* Tối ưu chữ */
 h2 {
   margin-bottom: 20px;
   color: #2c3e50;
   font-size: 1.8em; /* Sử dụng đơn vị tương đối */
 }
 
+/* Quy tắc chung cho các trường input */
 .form-group {
   margin-bottom: 16px;
   text-align: left;
@@ -59,11 +63,11 @@ h2 {
 .form-group input,
 .form-group select,
 .form-group textarea {
-  width: 100%; /* Đảm bảo các trường nhập liệu chiếm toàn bộ chiều rộng form */
+  width: 100%; /* Rất quan trọng: Chiếm 100% chiều rộng form-container */
   padding: 10px;
   border-radius: 6px;
   border: 1px solid #ccc;
-  font-size: 1em; 
+  font-size: 1em; /* Sử dụng đơn vị tương đối (1em = 16px) */
   box-sizing: border-box;
 }
 
@@ -89,22 +93,22 @@ h2 {
   background-color: #2980b9;
 }
 
-/* === Media Queries: Tối ưu cho các kích thước màn hình khác nhau === */
+/* === MEDIA QUERIES: ĐIỀU CHỈNH CHI TIẾT THEO KÍCH THƯỚC MÀN HÌNH === */
 
-/* 1. Desktop và Tablet ngang (Màn hình lớn hơn 640px) */
+/* 1. Màn hình lớn (Desktop/Tablet ngang) */
 @media (min-width: 641px) {
     .form-container {
-        /* Phục hồi padding lớn hơn cho màn hình lớn */
+        /* Phục hồi padding lớn hơn cho màn hình lớn hơn 640px */
         padding: 40px 48px;
     }
 }
 
-/* 2. Mobile dọc (Màn hình rất nhỏ, tối đa 480px) */
+/* 2. Màn hình rất nhỏ (Mobile dọc, dưới 480px) */
 @media (max-width: 480px) {
     h2 {
-        font-size: 1.5em; /* Giảm kích thước tiêu đề */
+        font-size: 1.5em; /* Giảm kích thước tiêu đề trên mobile */
     }
     .form-container {
-        padding: 20px 15px; /* Giảm padding ngang hơn nữa trên mobile nhỏ */
+        padding: 20px 15px; /* Giảm padding ngang tối thiểu để tối ưu không gian */
     }
 }
