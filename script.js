@@ -73,8 +73,7 @@ function translateForm(lang) {
 function showSuccessAndRedirect(lang) {
   const successMessage = lang === "vi" ? "✅ Đăng ký thành công! Bạn sẽ được chuyển hướng." : "✅ Registration successful! You will be redirected.";
   
-  // --- Logic Hiệu ứng Pháo hoa Giấy (Confetti) ---
-  // Cần nhúng thư viện canvas-confetti.js trong HTML để hoạt động
+  // Logic Confetti (nếu thư viện canvas-confetti.js được nhúng trong HTML)
   if (typeof confetti === 'function') {
     confetti({
       particleCount: 100,
@@ -95,6 +94,7 @@ function showSuccessAndRedirect(lang) {
 // === Thu thập dữ liệu form cụ thể ===
 function collectFormData(formId) {
     const data = {
+        // Ghi lại thời gian hiện tại theo múi giờ Việt Nam
         timestamp: new Date().toLocaleString("en-US", { timeZone: "Asia/Ho_Chi_Minh" }),
     };
 
@@ -148,11 +148,11 @@ function collectFormData(formId) {
     return data;
 }
 
-// !!! THAY THẾ URL NÀY BẰNG URL APPS SCRIPT ĐÃ TRIỂN KHAI CỦA BẠN !!!
-const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyuDDY28hFBK6cBcnMnsAEhLTyn6-FrWkXoFf9dqnbM5ea7-xIaxY1E1m4CDQ3967hw/exec'; 
+// !!! VUI LÒNG THAY THẾ URL NÀY BẰNG URL APPS SCRIPT ĐÃ TRIỂN KHAI CỦA BẠN !!!
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzL7Pq4s_YourUniqueScriptID_lY6Q/exec'; 
 
 async function sendDataToSheet(formData, lang) {
-    if (APPS_SCRIPT_URL === 'https://script.google.com/macros/s/AKfycbyuDDY28hFBK6cBcnMnsAEhLTyn6-FrWkXoFf9dqnbM5ea7-xIaxY1E1m4CDQ3967hw/exec') {
+    if (APPS_SCRIPT_URL.includes('YourUniqueScriptID')) {
         alert("Lỗi: Vui lòng thay thế APPS_SCRIPT_URL trong script.js bằng URL đã triển khai của bạn.");
         return;
     }
@@ -162,7 +162,7 @@ async function sendDataToSheet(formData, lang) {
             method: 'POST',
             mode: 'cors',
             headers: {
-                // Sử dụng text/plain để Apps Script có thể dễ dàng đọc JSON
+                // Quan trọng: Sử dụng text/plain để Apps Script có thể đọc JSON
                 'Content-Type': 'text/plain;charset=utf-8' 
             },
             body: JSON.stringify(formData)
