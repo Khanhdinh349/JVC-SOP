@@ -153,7 +153,6 @@ async function sendDataToSheet(formData, lang) {
             method: 'POST',
             mode: 'cors',
             headers: {
-                // BẮT BUỘC: Sử dụng text/plain
                 'Content-Type': 'text/plain;charset=utf-8' 
             },
             body: JSON.stringify(formData)
