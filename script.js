@@ -131,7 +131,7 @@ function showSuccessDialog(lang) {
     message.innerHTML = `Chào Mừng Đến Với One Era.`;
     confirmBtn.textContent = "Xác nhận";
   } else {
-    title.textContent = "✅ Registration Successful!";
+    title.textContent = "✅ Successful Registration!";
     message.innerHTML = `Welcome to One Era.`;
     confirmBtn.textContent = "Confirm";
   }
@@ -251,4 +251,5 @@ document.addEventListener("submit", (e) => {
     } else {
         alert(lang === "vi" ? "Lỗi: Không tìm thấy form ID hợp lệ." : "Error: No valid form ID found.");
     }
+
 });
