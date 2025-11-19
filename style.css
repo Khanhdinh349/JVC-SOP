@@ -135,7 +135,7 @@ h2 {
 /* === PHẦN MỚI: SUCCESS DIALOG BOX === */
 
 /* Overlay toàn màn hình */
-/* .modal-overlay {
+.modal-overlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -148,7 +148,7 @@ h2 {
     z-index: 1000;
     opacity: 0;
     transition: opacity 0.3s ease-in-out;
-} */
+}
 
 /* Hiển thị overlay */
 .modal-overlay.show {
