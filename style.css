@@ -175,7 +175,8 @@ h2 {
 }
 
 .modal-logo {
-    max-width: 100px;
+    max-width: 150px;
+    height: auto;
     margin-bottom: 15px;
 }
 

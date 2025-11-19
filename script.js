@@ -127,13 +127,14 @@ function showSuccessDialog(lang) {
   let countdown = 4;
   
   // Dịch nội dung
-  if (lang === "vi") {
+ if (lang === "vi") {
     title.textContent = "✅ Đăng ký thành công!";
-    message.innerHTML = `Dữ liệu đã được xử lý cục bộ (kiểm tra console). Bạn sẽ được chuyển hướng về trang đăng ký trong <span id="countdown">${countdown}</span> giây.`;
+    message.innerHTML = `Chào Mừng Đến Với One Era.<br/>Quay Lại Trang Đăng Ký Trong <span id="countdown">${countdown}</span> giây.`;
     confirmBtn.textContent = "Xác nhận";
   } else {
+    // Giữ nguyên nội dung tiếng Anh
     title.textContent = "✅ Registration Successful!";
-    message.innerHTML = `Data was processed locally (check console). You will be redirected to the registration page in <span id="countdown">${countdown}</span> seconds.`;
+    message.innerHTML = `Welcome to One Era.<br/>Return to Registration Page <span id="countdown">${countdown}</span> seconds.`;
     confirmBtn.textContent = "Confirm";
   }
   
