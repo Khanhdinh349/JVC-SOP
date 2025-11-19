@@ -158,7 +158,7 @@ h2 {
 
 /* Hộp thoại chính */
 .modal-content {
-    background-color: #fff;
+    background-color: rgba(255, 255, 255, 0.5);
     padding: 30px;
     border-radius: 10px;
     text-align: center;
@@ -193,7 +193,7 @@ h2 {
 }
 
 .modal-content button {
-    background-color: rgba(255, 255, 255, 0.5);
+    background-color: #3498db;
     color: white;
     border: none;
     padding: 10px 20px;
