@@ -10,7 +10,7 @@ function setLang(lang) {
 }
 
 // Logic chuyển hướng từ index.html
-const goBtn = document.getElementById("goBtn");
+const goBtn = document.getElementByAPPS_SCRIPT_URLId("goBtn");
 if (goBtn) {
   goBtn.addEventListener("click", () => {
     const lang = document.getElementById("language")?.value;
@@ -82,7 +82,7 @@ function translateForm(lang) {
 
 // ---
 
-## ⚙️ Logic Modal Thông Báo Thành Công & Apps Script
+//  Logic Modal Thông Báo Thành Công
 
 // Biến toàn cục để lưu trữ bộ đếm thời gian
 let countdownTimer;
@@ -168,46 +168,7 @@ function showSuccessDialog(lang) {
 
 // ---
 
-// === Cấu hình Apps Script (ĐÃ CẬP NHẬT URL CỦA BẠN) ===
-const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyuDDY28hFBK6cBcnMnsAEhLTyn6-FrWkXoFf9dqnbM5ea7-xIaxY1E1m4CDQ3967hw/exec'; 
-
-/**
- * Gửi dữ liệu form tới Google Apps Script.
- * @param {Object} formData Dữ liệu thu thập từ form.
- * @param {string} lang Ngôn ngữ hiện tại.
- */
-async function sendDataToSheet(formData, lang) {
-    
-    try {
-        const response = await fetch(APPS_SCRIPT_URL, {
-            method: 'POST',
-            mode: 'cors',
-            // Apps Script cần Content-Type là text/plain;charset=utf-8 để xử lý JSON
-            headers: {
-                'Content-Type': 'text/plain;charset=utf-8' 
-            },
-            body: JSON.stringify(formData)
-        });
-
-        // Apps Script trả về JSON
-        const result = await response.json();
-
-        if (result.result === "success") {
-            // Thay thế alert cũ bằng Modal tùy chỉnh và confetti
-            showSuccessDialog(lang); 
-        } else {
-            // Hiển thị thông báo lỗi từ Apps Script
-            alert(`Lỗi khi ghi dữ liệu: ${result.message}`);
-        }
-    } catch (error) {
-        alert(`Lỗi kết nối máy chủ: ${error.message}. Vui lòng kiểm tra Apps Script URL hoặc kết nối mạng.`);
-    }
-}
-
-
-// ---
-
-## 💾 Thu thập & Gửi Dữ liệu
+// ## Thu thập & Xử lý Dữ liệu (XỬ LÝ CỤC BỘ)
 
 // === Thu thập dữ liệu form (Sử dụng thuộc tính NAME) ===
 function collectFormData(formId) {
@@ -270,7 +231,8 @@ window.addEventListener("DOMContentLoaded", () => {
   translateForm(lang);
 });
 
-// === Submit form (Gửi dữ liệu qua Apps Script) ===
+// === Submit form (Xử lý dữ liệu cục bộ) ===
+// Dữ liệu chỉ được thu thập và in ra console.
 document.addEventListener("submit", (e) => {
     e.preventDefault();
     const lang = getLang();
@@ -281,8 +243,11 @@ document.addEventListener("submit", (e) => {
     const formData = collectFormData(formId);
 
     if (formData) {
-        // Gửi dữ liệu và xử lý phản hồi
-        sendDataToSheet(formData, lang);
+        // Ghi dữ liệu vào Console để kiểm tra
+        console.log(`Dữ liệu form đã thu thập (${formId}):`, formData); 
+        
+        // Gọi hộp thoại tùy chỉnh
+        showSuccessDialog(lang);
     } else {
         alert(lang === "vi" ? "Lỗi: Không tìm thấy form ID hợp lệ." : "Error: No valid form ID found.");
     }
