@@ -135,20 +135,20 @@ h2 {
 /* === PHẦN MỚI: SUCCESS DIALOG BOX === */
 
 /* Overlay toàn màn hình */
-.modal-overlay {
+/* .modal-overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.349);
-    display: none; /* Mặc định ẩn */
+    display: none; 
     justify-content: center;
     align-items: center;
     z-index: 1000;
     opacity: 0;
     transition: opacity 0.3s ease-in-out;
-}
+} */
 
 /* Hiển thị overlay */
 .modal-overlay.show {
@@ -158,7 +158,7 @@ h2 {
 
 /* Hộp thoại chính */
 .modal-content {
-    background-color: rgba(255, 255, 255, 0.454);
+    background-color: rgba(255, 255, 255, 0.5);
     padding: 30px;
     border-radius: 10px;
     text-align: center;
