@@ -10,7 +10,7 @@ function setLang(lang) {
 }
 
 // Logic chuyển hướng từ index.html
-const goBtn = document.getElementByAPPS_SCRIPT_URLId("goBtn");
+const goBtn = document.getElementById("goBtn");
 if (goBtn) {
   goBtn.addEventListener("click", () => {
     const lang = document.getElementById("language")?.value;
