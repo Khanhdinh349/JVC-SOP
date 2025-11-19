@@ -93,6 +93,19 @@ h2 {
   background-color: #2980b9;
 }
 
+/* === BẮT ĐẦU PHẦN RESPONSIVE CHO NGÀY VÀ GIỜ (MỚI) === */
+.date-time-group {
+  display: flex; /* Bật chế độ Flexbox */
+  gap: 16px; /* Khoảng cách giữa Ngày và Giờ */
+}
+
+.date-time-field {
+  flex: 1; /* Mỗi trường chiếm một phần bằng nhau */
+  min-width: 0; /* Cho phép các trường co lại */
+}
+/* === KẾT THÚC PHẦN RESPONSIVE CHO NGÀY VÀ GIỜ === */
+
+
 /* === MEDIA QUERIES: ĐIỀU CHỈNH CHI TIẾT THEO KÍCH THƯỚC MÀN HÌNH === */
 
 /* 1. Màn hình lớn (Desktop/Tablet ngang) */
@@ -110,5 +123,11 @@ h2 {
     }
     .form-container {
         padding: 20px 15px; /* Giảm padding ngang tối thiểu để tối ưu không gian */
+    }
+    
+    /* Buộc Ngày và Giờ xếp chồng trên mobile (khi màn hình <= 480px) */
+    .date-time-group {
+        flex-direction: column; 
+        gap: 0; 
     }
 }

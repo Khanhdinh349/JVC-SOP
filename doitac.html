@@ -43,16 +43,18 @@
         <input type="text" data-ph-vi="Tên nhân sự" data-ph-en="Staff name" name="recStaff" required />
       </div>
 
-      <div class="form-group">
-        <label data-vi="Ngày *" data-en="Date *"></label>
-        <input type="date" id="visitDate" name="visitDate" required />
-      </div>
+      <div class="form-group date-time-group">
+        
+        <div class="date-time-field">
+          <label data-vi="Ngày *" data-en="Date *"></label>
+          <input type="date" id="visitDate" name="visitDate" required />
+        </div>
 
-      <div class="form-group">
-        <label data-vi="Giờ *" data-en="Time *"></label>
-        <input type="time" id="visitTime" name="visitTime" required />
+        <div class="date-time-field">
+          <label data-vi="Giờ *" data-en="Time *"></label>
+          <input type="time" id="visitTime" name="visitTime" required />
+        </div>
       </div>
-
       <div class="form-group">
         <label data-vi="Ghi chú" data-en="Notes"></label>
         <textarea data-ph-vi="Ghi chú thêm (nếu có)" data-ph-en="Additional notes (optional)" name="notes"></textarea>
