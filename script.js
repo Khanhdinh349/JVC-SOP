@@ -33,7 +33,7 @@ if (goBtn) {
 // === Tự động cập nhật giờ VN (UTC+7) ===
 function setVietnamTime() {
   const now = new Date();
-  const vietnamOffset = 7 * 60; // UTC+7
+  const vietnamOffset = 7 * 60; 
   const localOffset = now.getTimezoneOffset();
   const vietnamTime = new Date(now.getTime() + (vietnamOffset + localOffset) * 60000);
 
@@ -80,37 +80,23 @@ function translateForm(lang) {
   }
 }
 
-// ---
-
-//  Logic Modal Thông Báo Thành Công
-
-// Biến toàn cục để lưu trữ bộ đếm thời gian
+// === Modal Redirect Logic ===
 let countdownTimer;
 
-/**
- * Hàm quản lý việc chuyển hướng về trang chủ
- * @param {string} lang Ngôn ngữ hiện tại
- * @param {HTMLElement} confirmBtn Nút Xác nhận
- */
 function setupRedirect(lang, confirmBtn) {
     const redirectToIndex = () => {
-        // Đảm bảo xóa bỏ bộ đếm và sự kiện click trước khi chuyển hướng
         if (countdownTimer) {
             clearInterval(countdownTimer);
         }
         confirmBtn.removeEventListener('click', redirectToIndex);
         window.location.href = `index.html?lang=${lang}`;
     };
-    
-    // Thiết lập sự kiện cho nút Xác nhận
+
     confirmBtn.onclick = redirectToIndex;
     return redirectToIndex;
 }
 
-/**
- * Hiển thị hộp thoại thông báo tùy chỉnh khi đăng ký thành công.
- * @param {string} lang Ngôn ngữ hiện tại ('vi' hoặc 'en').
- */
+// === Hiển thị thông báo thành công ===
 function showSuccessDialog(lang) {
   const modal = document.getElementById("success-modal");
   const title = document.getElementById("modal-title");
@@ -118,14 +104,10 @@ function showSuccessDialog(lang) {
   const confirmBtn = document.getElementById("confirm-btn");
   
   if (!modal || !confirmBtn) {
-      // Fallback nếu không tìm thấy Modal HTML
       alert(lang === "vi" ? "Đăng ký thành công! (Không tìm thấy hộp thoại tùy chỉnh)" : "Registration Successful! (Custom dialog not found)");
       return;
   }
 
-  let countdown = 4;
-  
-  // Dịch nội dung (ĐÃ CẬP NHẬT TIẾNG VIỆT & TIẾNG ANH VỚI <br/>)
   if (lang === "vi") {
     title.textContent = "✅ Đăng ký thành công!";
     message.innerHTML = `Chào Mừng Đến Với One Era.`;
@@ -135,42 +117,33 @@ function showSuccessDialog(lang) {
     message.innerHTML = `Welcome to One Era.`;
     confirmBtn.textContent = "Confirm";
   }
-  
-  // === GỌI HIỆU ỨNG PHÁO HOA ===
+
+  // Hiệu ứng Confetti
   if (typeof confetti === 'function') {
     confetti({
       particleCount: 100,
       spread: 70,
       origin: { y: 0.6 }
     });
-  } 
-  // ============================
+  }
 
-  // Hiển thị hộp thoại
+  // Hiển thị modal
   modal.classList.add('show');
-  
-  // Khởi tạo logic chuyển hướng và gán sự kiện cho nút Xác nhận
+
+  // Redirect Setup
   const redirectToIndex = setupRedirect(lang, confirmBtn);
 
-            // Nếu request gửi đi không bị chặn, giả định Apps Script đã nhận.
-            console.log("Dữ liệu đã được gửi. Kiểm tra Google Sheet để xác nhận dữ liệu đã được ghi.");
-            
-            // Xử lý thành công
-            successMessage.classList.remove('hidden');
-            form.reset(); 
-            setTimeout(hideMessages, 5000);
+  // Reset form an toàn
+  const activeForm = modal.closest("body").querySelector("form");
+  if (activeForm) activeForm.reset();
+} // <-- ĐÓNG HÀM ĐÚNG CHỖ
 
-// ---
-
-// ## Thu thập & Xử lý Dữ liệu (XỬ LÝ CỤC BỘ)
-
-// === Thu thập dữ liệu form (Sử dụng thuộc tính NAME) ===
+// === Thu thập dữ liệu form ===
 function collectFormData(formId) {
     const data = {
         timestamp: new Date().toLocaleString("en-US", { timeZone: "Asia/Ho_Chi_Minh" }),
     };
 
-    // Ánh xạ các trường dữ liệu theo form ID
     const fieldMap = {
         "form-doitac": [
             { selector: '[name="fullName"]', name: 'fullName' },
@@ -217,7 +190,6 @@ function collectFormData(formId) {
     return data;
 }
 
-
 // === Khi tải mỗi trang ===
 window.addEventListener("DOMContentLoaded", () => {
   const lang = getLang();
@@ -225,25 +197,20 @@ window.addEventListener("DOMContentLoaded", () => {
   translateForm(lang);
 });
 
-// === Submit form (Xử lý dữ liệu cục bộ) ===
-// Dữ liệu chỉ được thu thập và in ra console.
+// === Submit form ===
 document.addEventListener("submit", (e) => {
     e.preventDefault();
     const lang = getLang();
-    const formId = e.target.id; 
+    const formId = e.target.id;
 
     if (!formId.startsWith('form-')) return;
 
     const formData = collectFormData(formId);
 
     if (formData) {
-        // Ghi dữ liệu vào Console để kiểm tra
         console.log(`Dữ liệu form đã thu thập (${formId}):`, formData); 
-        
-        // Gọi hộp thoại tùy chỉnh
         showSuccessDialog(lang);
     } else {
         alert(lang === "vi" ? "Lỗi: Không tìm thấy form ID hợp lệ." : "Error: No valid form ID found.");
     }
-
 });
