@@ -17,8 +17,8 @@ if (goBtn) {
     const type = document.getElementById("userType")?.value;
 
     if (!lang || !type) {
-        alert("Lỗi: Không tìm thấy các trường chọn ngôn ngữ hoặc loại đăng ký.");
-        return;
+      alert("Lỗi: Không tìm thấy các trường chọn ngôn ngữ hoặc loại đăng ký.");
+      return;
     }
 
     if (type === "") {
@@ -70,11 +70,11 @@ function translateForm(lang) {
       daily: { vi: "Đăng Ký Đại Lý", en: "Agency Registration" },
     };
     const page = window.location.pathname.split("/").pop().split(".")[0];
-    
+
     if (map[page]) {
       title.textContent = map[page][lang];
       if (!document.getElementById("goBtn")) {
-          submitBtn.textContent = lang === "vi" ? "Gửi đăng ký" : "Submit";
+        submitBtn.textContent = lang === "vi" ? "Gửi đăng ký" : "Submit";
       }
     }
   }
@@ -84,16 +84,14 @@ function translateForm(lang) {
 let countdownTimer;
 
 function setupRedirect(lang, confirmBtn) {
-    const redirectToIndex = () => {
-        if (countdownTimer) {
-            clearInterval(countdownTimer);
-        }
-        confirmBtn.removeEventListener('click', redirectToIndex);
-        window.location.href = `index.html?lang=${lang}`;
-    };
+  const redirectToIndex = () => {
+    if (countdownTimer) clearInterval(countdownTimer);
+    confirmBtn.removeEventListener('click', redirectToIndex);
+    window.location.href = `index.html?lang=${lang}`;
+  };
 
-    confirmBtn.onclick = redirectToIndex;
-    return redirectToIndex;
+  confirmBtn.onclick = redirectToIndex;
+  return redirectToIndex;
 }
 
 // === Hiển thị thông báo thành công ===
@@ -102,10 +100,10 @@ function showSuccessDialog(lang) {
   const title = document.getElementById("modal-title");
   const message = document.getElementById("modal-message");
   const confirmBtn = document.getElementById("confirm-btn");
-  
+
   if (!modal || !confirmBtn) {
-      alert(lang === "vi" ? "Đăng ký thành công! (Không tìm thấy hộp thoại tùy chỉnh)" : "Registration Successful! (Custom dialog not found)");
-      return;
+    alert(lang === "vi" ? "Đăng ký thành công!" : "Registration Successful!");
+    return;
   }
 
   if (lang === "vi") {
@@ -118,7 +116,6 @@ function showSuccessDialog(lang) {
     confirmBtn.textContent = "Confirm";
   }
 
-  // Hiệu ứng Confetti
   if (typeof confetti === 'function') {
     confetti({
       particleCount: 100,
@@ -127,126 +124,100 @@ function showSuccessDialog(lang) {
     });
   }
 
-  // Hiển thị modal
   modal.classList.add('show');
-
-  // Redirect Setup
   setupRedirect(lang, confirmBtn);
 
-  // Reset form an toàn
   const activeForm = modal.closest("body").querySelector("form");
   if (activeForm) activeForm.reset();
-} 
+}
 
 // === Thu thập dữ liệu form ===
 function collectFormData(formId) {
-    const data = {
-        // Cập nhật: Sử dụng timestamp VNM/Asia/Ho_Chi_Minh
-        timestamp: new Date().toLocaleString("en-US", { timeZone: "Asia/Ho_Chi_Minh" }), 
-    };
+  const data = {
+    timestamp: new Date().toLocaleString("en-US", { timeZone: "Asia/Ho_Chi_Minh" })
+  };
 
-    const fieldMap = {
-        "form-doitac": [
-            { selector: '[name="fullName"]', name: 'fullName' },
-            { selector: '[name="idNumber"]', name: 'idNumber' },
-            { selector: '[name="phoneNumber"]', name: 'phoneNumber' },
-            { selector: '[name="company"]', name: 'company' },
-            { selector: '[name="recDepartment"]', name: 'recDepartment' },
-            { selector: '[name="recStaff"]', name: 'recStaff' },
-            { selector: '[name="visitDate"]', name: 'visitDate' },
-            { selector: '[name="visitTime"]', name: 'visitTime' },
-            { selector: '[name="notes"]', name: 'notes' }
-        ],
-        "form-khach": [
-            { selector: '[name="fullName"]', name: 'fullName' },
-            { selector: '[name="idNumber"]', name: 'idNumber' },
-            { selector: '[name="phoneNumber"]', name: 'phoneNumber' },
-            { selector: '[name="email"]', name: 'email' },
-            { selector: '[name="visitDate"]', name: 'visitDate' },
-            { selector: '[name="visitTime"]', name: 'visitTime' },
-            { selector: '[name="notes"]', name: 'notes' }
-        ],
-        "form-daily": [
-            { selector: '[name="agencyName"]', name: 'agencyName' },
-            { selector: '[name="staffName"]', name: 'staffName' },
-            { selector: '[name="idNumber"]', name: 'idNumber' },
-            { selector: '[name="phoneNumber"]', name: 'phoneNumber' },
-            { selector: '[name="visitDate"]', name: 'visitDate' },
-            { selector: '[name="visitTime"]', name: 'visitTime' },
-            { selector: '[name="notes"]', name: 'notes' }
-        ]
-    };
-    
-    const currentFormMap = fieldMap[formId];
-    if (!currentFormMap) return null;
+  const fieldMap = {
+    "form-doitac": [
+      { selector: '[name="fullName"]', name: 'fullName' },
+      { selector: '[name="idNumber"]', name: 'idNumber' },
+      { selector: '[name="phoneNumber"]', name: 'phoneNumber' },
+      { selector: '[name="company"]', name: 'company' },
+      { selector: '[name="recDepartment"]', name: 'recDepartment' },
+      { selector: '[name="recStaff"]', name: 'recStaff' },
+      { selector: '[name="visitDate"]', name: 'visitDate' },
+      { selector: '[name="visitTime"]', name: 'visitTime' },
+      { selector: '[name="notes"]', name: 'notes' }
+    ],
+    "form-khach": [
+      { selector: '[name="fullName"]', name: 'fullName' },
+      { selector: '[name="idNumber"]', name: 'idNumber' },
+      { selector: '[name="phoneNumber"]', name: 'phoneNumber' },
+      { selector: '[name="email"]', name: 'email' },
+      { selector: '[name="visitDate"]', name: 'visitDate' },
+      { selector: '[name="visitTime"]', name: 'visitTime' },
+      { selector: '[name="notes"]', name: 'notes' }
+    ],
+    "form-daily": [
+      { selector: '[name="agencyName"]', name: 'agencyName' },
+      { selector: '[name="staffName"]', name: 'staffName' },
+      { selector: '[name="idNumber"]', name: 'idNumber' },
+      { selector: '[name="phoneNumber"]', name: 'phoneNumber' },
+      { selector: '[name="visitDate"]', name: 'visitDate' },
+      { selector: '[name="visitTime"]', name: 'visitTime' },
+      { selector: '[name="notes"]', name: 'notes' }
+    ]
+  };
 
-    currentFormMap.forEach(field => {
-        const element = document.querySelector(`#${formId} ${field.selector}`);
-        if (element) {
-            data[field.name] = element.value;
-        }
+  const currentFormMap = fieldMap[formId];
+  if (!currentFormMap) return null;
+
+  currentFormMap.forEach(f => {
+    const el = document.querySelector(`#${formId} ${f.selector}`);
+    if (el) data[f.name] = el.value;
+  });
+
+  data.formType = formId.replace("form-", "");
+  return data;
+}
+
+// === Gửi dữ liệu đến Apps Script (đã sửa CORS) ===
+async function sendDataToSheet(formData, lang) {
+  const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx_piizLKBsIKb2LqFZjpOud0DUATR-YjcjZ-f6Lh5mfxOi9fz_ToqeVXJtEv1gSbt6/exec';
+  const errorMsg = lang === "vi" ? "Gửi dữ liệu thất bại." : "Data submission failed.";
+  const submitBtn = document.querySelector(".submit-btn");
+
+  if (submitBtn) {
+    submitBtn.disabled = true;
+    submitBtn.textContent = lang === "vi" ? "Đang gửi..." : "Sending...";
+  }
+
+  try {
+    const response = await fetch(APPS_SCRIPT_URL, {
+      method: "POST",
+      headers: { "Content-Type": "text/plain" },
+      body: JSON.stringify(formData)
     });
 
-    data.formType = formId.replace('form-', ''); 
-    return data;
-}
+    const result = await response.json();
 
-// === HÀM GỬI DỮ LIỆU ĐẾN APPS SCRIPT (Đã cập nhật URL) ===
-async function sendDataToSheet(formData, lang) {
-    // 🚀 Đã chèn URL Apps Script MỚI NHẤT
-    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx_piizLKBsIKb2LqFZjpOud0DUATR-YjcjZ-f6Lh5mfxOi9fz_ToqeVXJtEv1gSbt6/exec'; 
-    const errorMsg = lang === "vi" ? "Gửi dữ liệu thất bại." : "Data submission failed.";
-    const submitBtn = document.querySelector(".submit-btn");
+    if (result.result === "success") {
+      showSuccessDialog(lang);
+    } else {
+      alert(`${errorMsg} Chi tiết: ${result.message}`);
+    }
 
+  } catch (error) {
+    alert(`${errorMsg} Chi tiết: ${error.message}`);
+  } finally {
     if (submitBtn) {
-        submitBtn.disabled = true; // Tắt nút gửi
-        submitBtn.textContent = lang === "vi" ? "Đang gửi..." : "Sending...";
+      submitBtn.disabled = false;
+      submitBtn.textContent = lang === "vi" ? "Gửi đăng ký" : "Submit";
     }
-
-    try {
-        const response = await fetch(APPS_SCRIPT_URL, {
-            method: 'POST',
-            mode: 'cors', // Cần thiết cho CORS
-            cache: 'no-cache',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(formData)
-        });
-
-        // Kiểm tra lỗi HTTP (ví dụ: 404, 500)
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        
-        const result = await response.json();
-        
-        if (result.result === 'success') {
-            console.log("Apps Script Response:", result.message);
-            showSuccessDialog(lang); 
-        } else {
-            console.error("Apps Script Error:", result.message);
-            alert(`${errorMsg} Chi tiết: ${result.message}`);
-        }
-
-    } catch (error) {
-        console.error("Fetch Error:", error);
-        // Thông báo lỗi chi tiết, hướng dẫn kiểm tra Deploy
-        alert(`${errorMsg} Vui lòng kiểm tra lại TRIỂN KHAI APPS SCRIPT (phải là URL /exec công khai 'Anyone'). Chi tiết: ${error.message}`);
-    } finally {
-        if (submitBtn) {
-             submitBtn.disabled = false; 
-             const page = window.location.pathname.split("/").pop().split(".")[0];
-             const defaultText = lang === "vi" ? "Gửi đăng ký" : "Submit";
-             if (page && (page === 'doitac' || page === 'khach' || page === 'daily')) {
-                submitBtn.textContent = defaultText;
-             }
-        }
-    }
+  }
 }
 
-
-// === Khi tải mỗi trang ===
+// === Khi tải trang ===
 window.addEventListener("DOMContentLoaded", () => {
   const lang = getLang();
   setVietnamTime();
@@ -255,18 +226,12 @@ window.addEventListener("DOMContentLoaded", () => {
 
 // === Submit form ===
 document.addEventListener("submit", (e) => {
-    e.preventDefault();
-    const lang = getLang();
-    const formId = e.target.id;
+  e.preventDefault();
+  const lang = getLang();
+  const formId = e.target.id;
 
-    if (!formId.startsWith('form-')) return;
+  if (!formId.startsWith("form-")) return;
 
-    const formData = collectFormData(formId);
-
-    if (formData) {
-        console.log(`Dữ liệu form đã thu thập (${formId}):`, formData); 
-        sendDataToSheet(formData, lang); 
-    } else {
-        alert(lang === "vi" ? "Lỗi: Không tìm thấy form ID hợp lệ." : "Error: No valid form ID found.");
-    }
+  const formData = collectFormData(formId);
+  if (formData) sendDataToSheet(formData, lang);
 });
