@@ -332,15 +332,22 @@ document.addEventListener("submit", (e) => {
   if (!formId.startsWith("form-")) return;
 
   const formData = collectFormData(formId);
+  if (!formData) {
+    alert(lang === "vi" ? "Không lấy được dữ liệu form." : "Cannot collect form data.");
+    return;
+  }
 
   const submitBtn = e.target.querySelector(".submit-btn");
   if (submitBtn) {
-    submitBtn.disabled   = true;
+    submitBtn.disabled = true;
     submitBtn.textContent = lang === "vi" ? "Đang gửi..." : "Sending...";
   }
 
   fetch(APPSSCRIPT_URL, {
     method: "POST",
+    headers: {
+      "Content-Type": "application/json", // gửi JSON đúng chuẩn
+    },
     body: JSON.stringify(formData),
   })
     .then((response) => {
@@ -348,26 +355,41 @@ document.addEventListener("submit", (e) => {
       throw new Error(`Lỗi server. Mã trạng thái: ${response.status}`);
     })
     .then((data) => {
+      // 🟢 Ghi thành công
       if (data.result === "success") {
         console.log("Dữ liệu đã được ghi thành công:", data.data);
         showSuccessDialog(lang);
-      } else if (data.result === "full") {
-        const msgVi = "Khung giờ này đã vượt quá 25 khách. Vui lòng chọn khung khác.";
-        const msgEn = "This time slot already exceeds 25 guests. Please choose another slot.";
+        return;
+      }
+
+      // 🔴 Slot full (Apps Script đã check tổng 3 sheet)
+      if (data.result === "full") {
+        const fallbackVi = "Khung giờ này đã đủ số lượng khách. Vui lòng chọn khung khác.";
+        const fallbackEn = "This time slot is full. Please choose another slot.";
+
+        const msgVi =
+          data.message ||
+          `Khung giờ này đã đủ khách (${data.currentTotal || 0}/25). Vui lòng chọn khung khác.`;
+        const msgEn =
+          data.message ||
+          `This time slot is full (${data.currentTotal || 0}/25). Please choose another slot.`;
+
         alert(lang === "vi" ? msgVi : msgEn);
 
-        const formType = formData.formType;
+        // Refresh lại trạng thái slot để dropdown cập nhật số lượng
         if (formData.visitDate) {
-          fetchSlotStatus(formData.visitDate, formType);
+          fetchSlotStatus(formData.visitDate, formData.formType);
         }
-      } else {
-        alert(
-          lang === "vi"
-            ? `Lỗi khi ghi dữ liệu. Chi tiết: ${data.message}`
-            : `Error writing data. Details: ${data.message}`
-        );
-        console.error("Lỗi Apps Script:", data.message);
+        return;
       }
+
+      // Các lỗi khác từ Apps Script
+      alert(
+        lang === "vi"
+          ? `Lỗi khi ghi dữ liệu. Chi tiết: ${data.message || "Không rõ"}`
+          : `Error writing data. Details: ${data.message || "Unknown"}`
+      );
+      console.error("Lỗi Apps Script:", data.message);
     })
     .catch((error) => {
       alert(
@@ -379,7 +401,7 @@ document.addEventListener("submit", (e) => {
     })
     .finally(() => {
       if (submitBtn) {
-        submitBtn.disabled   = false;
+        submitBtn.disabled = false;
         submitBtn.textContent = lang === "vi" ? "Gửi đăng ký" : "Submit";
       }
     });
